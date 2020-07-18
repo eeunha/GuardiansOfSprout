@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home_nav"
+        android:checked="true"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="홈"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/board_nav"
+        android:enabled="true"
+        android:icon="@drawable/ic_account_balance_black_24dp"
+        android:title="게시판"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/feed_nav"
+        android:enabled="true"
+        android:icon="@drawable/ic_insert_comment_black_24dp"
+        android:title="피드"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/mypage_nav"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="MY"
+        app:showAsAction="always" />
+</menu>
