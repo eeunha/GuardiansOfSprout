@@ -6,8 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 /**
@@ -27,7 +31,13 @@ public class HomeFragment extends Fragment {
 
     ViewGroup viewGroup;
 
-    ImageButton mapButton;
+    ImageButton mapBtn, searchBtn;
+
+    TextView date_textView;
+
+    SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+    Date time = new Date();
+    String time1 = format.format(time);
 
     public HomeFragment() {
         // Required empty public constructor
@@ -66,11 +76,23 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mapButton = layout.findViewById(R.id.map_button);
-        mapButton.setOnClickListener(new View.OnClickListener() {
+        date_textView = layout.findViewById(R.id.date_textView);
+        date_textView.setText(time1);
+
+        mapBtn = layout.findViewById(R.id.map_button);
+        mapBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        searchBtn = layout.findViewById(R.id.searchBtn);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
                 startActivity(intent);
             }
         });

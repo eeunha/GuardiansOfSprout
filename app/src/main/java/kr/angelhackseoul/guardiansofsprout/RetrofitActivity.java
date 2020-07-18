@@ -54,29 +54,21 @@ public class RetrofitActivity extends AppCompatActivity {
 //        }
     }
 
-//    public void onStoreSearch(View view) {
-////        String id = editText.getText().toString();
-////
-////        if (!id.isEmpty()) {
-////            Call<ArrayList<JsonObject>> res = NetRetrofit.getInstance().getService().getListRepos(id);
-//
-//        Call<ArrayList<JsonObject>> res = NetRetrofit.getInstance().getService().getStoreRepos();    // 안에 들은 전체 리스트
-//        res.enqueue(new Callback<ArrayList<JsonObject>>() {
-//            @Override
-//            public void onResponse(Call<ArrayList<JsonObject>> call, Response<ArrayList<JsonObject>> response) {
-//                Log.d("Retrofit", response.toString());
-//                if (response.body() != null)
-//                    textView.setText(response.body().toString());
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ArrayList<JsonObject>> call, Throwable t) {
-//                Log.e("Err", t.getMessage());
-//            }
-//        });
-////        } else {
-////            Toast.makeText(this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
-////        }
-//    }
+    public void onStoreSearch(View view) {
+        Call<ArrayList<JsonObject>> res = NetRetrofit.getInstance().getService().getStoreRepos();    // 안에 들은 전체 리스트
+        res.enqueue(new Callback<ArrayList<JsonObject>>() {
+            @Override
+            public void onResponse(Call<ArrayList<JsonObject>> call, Response<ArrayList<JsonObject>> response) {
+                Log.d("Retrofit", response.toString());
+                if (response.body() != null)
+                    textView.setText(response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<JsonObject>> call, Throwable t) {
+                Log.e("Err", t.getMessage());
+            }
+        });
+    }
 
 }

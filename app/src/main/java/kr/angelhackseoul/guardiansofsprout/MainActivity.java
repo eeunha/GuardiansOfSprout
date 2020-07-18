@@ -30,12 +30,12 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.home: {
+                    case R.id.home_nav: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, homeFragment).commitAllowingStateLoss();
                         return true;
                     }
 
-                    case R.id.tab2: {
+                    case R.id.board_nav: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, storeFragment).commitAllowingStateLoss();
                         return true;
                     }

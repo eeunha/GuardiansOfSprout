@@ -11,6 +11,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -88,9 +90,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         setContentView(R.layout.activity_map);
 
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.myToolbar3);
+        toolbar.setTitle("");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
+
+
         previous_marker = new ArrayList<Marker>();
 
-        Button button = findViewById(R.id.button);
+        Button button = findViewById(R.id.findStoreBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +120,17 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: {    // toolbar의 back이 눌렸을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -441,6 +461,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onPlacesSuccess(final List<Place> places) {
+        Log.d(TAG, "onPlacesSuccess");
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -479,7 +501,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         new NRPlaces.Builder().listener(MapActivity.this)
                 .key("api key 입력칸")
                 .latlng(location.latitude, location.longitude)  // 현재 위치
-                .radius(100)    // 500미터 내에서 검색
+                .radius(500)    // 500미터 내에서 검색
                 .type(PlaceType.RESTAURANT) // 음식점
                 .build()
                 .execute();

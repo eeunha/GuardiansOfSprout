@@ -14,20 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MapActivity"></activity>
+
+
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".MapActivity">
+
+        </activity>
         <activity android:name=".MainActivity">
+
+        </activity>
+
+        <activity android:name=".RetrofitActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ToolbarActivity"></activity>
-        <activity android:name=".RetrofitActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB8k3kW5aLAD84PCVvJZXE2I5_gwGXuDlM" />
+            android:value="AIzaSyAEDQMFzLbkcU6MObUw8Iq0YSm3jzC4OL4" />
     </application>
 
 </manifest>

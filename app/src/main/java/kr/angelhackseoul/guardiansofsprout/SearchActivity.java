@@ -1,25 +1,25 @@
 package kr.angelhackseoul.guardiansofsprout;
 
-
-import android.os.Bundle;
-import android.view.MenuItem;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class ToolbarActivity extends AppCompatActivity {
+import android.os.Bundle;
+import android.view.MenuItem;
+
+public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_toolbar);
+        setContentView(R.layout.activity_search);
 
-        Toolbar toolbar = findViewById(R.id.myToolbar);
+
+        Toolbar toolbar = findViewById(R.id.myToolbar2);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 뒤로가기 버튼, 디폴티로 true만 해도 백버튼이 생김
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
