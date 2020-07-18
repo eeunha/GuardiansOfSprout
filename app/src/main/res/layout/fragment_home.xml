@@ -21,14 +21,14 @@
                 android:gravity="right"
                 android:orientation="horizontal">
 
-                <ImageButton
+              <!--  <ImageButton
                     android:id="@+id/map_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/design_default_color_background"
-                    android:src="@drawable/ic_map_icon" />
+                    android:src="@drawable/ic_map_icon" /> -->
             </LinearLayout>
 
             <TextView
@@ -89,7 +89,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/imageButton2"
+                    android:id="@+id/category_restaurant_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -97,12 +97,12 @@
                     android:src="@drawable/ic_food_icon" />
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/category_cafe_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#FFFFFF"
-                    android:src="@drawable/ic_food_icon" />
+                    android:src="@drawable/ic_cafe_icon" />
 
                 <ImageButton
                     android:id="@+id/imageButton4"

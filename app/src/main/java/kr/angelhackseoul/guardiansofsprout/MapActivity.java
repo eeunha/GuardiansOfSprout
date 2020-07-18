@@ -499,7 +499,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             previous_marker.clear();    // 지역정보 마커 클리어
 
         new NRPlaces.Builder().listener(MapActivity.this)
-                .key("api key 입력칸")
+//                .key("api key 입력칸")
+                .key("AIzaSyDNkxFUcJZAhRpMegiC5w37Vws0ddU-Eg4")
                 .latlng(location.latitude, location.longitude)  // 현재 위치
                 .radius(500)    // 500미터 내에서 검색
                 .type(PlaceType.RESTAURANT) // 음식점

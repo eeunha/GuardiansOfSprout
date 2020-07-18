@@ -39,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, storeFragment).commitAllowingStateLoss();
                         return true;
                     }
+                    case R.id.feed_nav: {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, storeFragment).commitAllowingStateLoss();
+                        return true;
+                    }
+                    case R.id.mypage_nav: {
+                        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, storeFragment).commitAllowingStateLoss();
+                        return true;
+                    }
                     default:
                         return false;
                 }

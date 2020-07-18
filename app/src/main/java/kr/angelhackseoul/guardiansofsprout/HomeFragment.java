@@ -20,6 +20,11 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
+
+    public interface OnApplySelectedListener {
+        void onCategoryApplySelected(String category);
+    }
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +36,7 @@ public class HomeFragment extends Fragment {
 
     ViewGroup viewGroup;
 
-    ImageButton mapBtn, searchBtn;
+    ImageButton searchBtn, categoryRestaurantBtn, categoryCafeBtn;
 
     TextView date_textView;
 
@@ -79,15 +84,6 @@ public class HomeFragment extends Fragment {
         date_textView = layout.findViewById(R.id.date_textView);
         date_textView.setText(time1);
 
-        mapBtn = layout.findViewById(R.id.map_button);
-        mapBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
-            }
-        });
-
         searchBtn = layout.findViewById(R.id.searchBtn);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,6 +93,23 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        categoryRestaurantBtn = layout.findViewById(R.id.category_restaurant_btn);
+        categoryRestaurantBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        categoryCafeBtn = layout.findViewById(R.id.category_cafe_btn);
+        categoryCafeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MapActivity.class);
+                startActivity(intent);
+            }
+        });
 //        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);
         return layout;
     }
