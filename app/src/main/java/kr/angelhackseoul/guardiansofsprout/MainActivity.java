@@ -1,10 +1,14 @@
 package kr.angelhackseoul.guardiansofsprout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -25,6 +29,19 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, homeFragment).commitAllowingStateLoss();
 
+
+        Intent intent = getIntent();
+        StoreA storeA = (StoreA) intent.getSerializableExtra("storeData");
+//        String pageFlag2 = intent.getExtras().getString("pageFlag");
+
+//        if (pageFlag2.equals("yes")) {
+//            Fragment fragment = new DetailStoreFragment();
+//            FragmentManager fm = getSupportFragmentManager();
+//            final FragmentTransaction fragmentTransaction = fm.beginTransaction();
+//            fragmentTransaction.replace(R.id.main_layout, fragment);
+//            fragmentTransaction.commit();
+//        }
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -34,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, homeFragment).commitAllowingStateLoss();
                         return true;
                     }
-
                     case R.id.board_nav: {
                         getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, storeFragment).commitAllowingStateLoss();
                         return true;

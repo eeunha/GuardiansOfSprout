@@ -3,14 +3,19 @@ package kr.angelhackseoul.guardiansofsprout;
 import java.util.ArrayList;
 import java.util.List;
 
-// Store 받을 때 사용
-public class Store {
-    int id;
+// store 데이터 보낼 때 사용
+public class StoreDTO {
     String name;
     double latitude;
     double longitude;
     String address;
-    List<Review> reviews = new ArrayList<>();
+
+    public StoreDTO(String name, double latitude, double longitude,String address) {
+        this.name = name;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address= address;
+    }
 
     public String getAddress() {
         return address;
@@ -18,14 +23,6 @@ public class Store {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -52,11 +49,4 @@ public class Store {
         this.longitude = longitude;
     }
 
-    public List<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
 }

@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+// app level build.gradle
+/**
+ * Hide API keys
+ */
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def googleMapApiKey = properties.getProperty('google.map.key')
+def placeApiKey = properties.getProperty('place.key')
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -12,6 +21,7 @@ android {
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true;
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [googleMapApiKey: googleMapApiKey]
     }
 
     buildTypes {
