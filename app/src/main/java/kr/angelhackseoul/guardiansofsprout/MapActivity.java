@@ -10,11 +10,16 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +48,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -52,6 +58,11 @@ import noman.googleplaces.Place;
 import noman.googleplaces.PlaceType;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, ActivityCompat.OnRequestPermissionsResultCallback, PlacesListener {
 
@@ -82,6 +93,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     List<Marker> previous_marker = null;
 
+    List<StoreDTO> stores = new ArrayList<StoreDTO>();
+
+    TextView textView;
+    List<StoreA> list = new ArrayList<>();
+    StoreListAdapter sla;
+    ListView listView;
+
+    boolean pageFlag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,11 +111,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_map);
 
         // Toolbar
-        Toolbar toolbar = findViewById(R.id.myToolbar3);
-        toolbar.setTitle("");
+        Toolbar toolbar = findViewById(R.id.map_act_Toolbar);
+        toolbar.setTitle("음식점");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // 뒤로가기 버튼, 디폴트로 true만 해도 백버튼이 생김
 
+        listView = (ListView) findViewById(R.id.storeListVIew);
 
         previous_marker = new ArrayList<Marker>();
 
@@ -104,6 +125,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 showPlaceInformation(currentPosition);
+            }
+        });
+
+        sla = new StoreListAdapter(this, 0, (ArrayList<StoreA>) list);
+        listView.setAdapter(sla);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String pageFlag = "yes";
+                StoreA storeA = list.get(position);
+
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("storeData", storeA);
+                intent.putExtra("pageFlag", pageFlag);
+                startActivity(intent);
             }
         });
 
@@ -467,9 +503,14 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void run() {
                 for (noman.googleplaces.Place place : places) {
+
+
                     LatLng latLng = new LatLng(place.getLatitude(), place.getLongitude());
 
                     String markerSnippet = getCurrentAddress(latLng);
+
+                    StoreDTO store = new StoreDTO(place.getName(), place.getLatitude(), place.getLongitude(), markerSnippet);
+                    stores.add(store);
 
                     MarkerOptions markerOptions = new MarkerOptions();
                     markerOptions.position(latLng);
@@ -477,6 +518,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     markerOptions.snippet(markerSnippet);
                     Marker item = mMap.addMarker(markerOptions);
                     previous_marker.add(item);
+
+
                 }
 
                 // 중복 마커 제거
@@ -484,12 +527,84 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 hashSet.addAll(previous_marker);
                 previous_marker.clear();
                 previous_marker.addAll(hashSet);
+
+                for (StoreDTO s : stores) {
+                    Log.d("TAG", s.getName());
+                    Log.d("TAG", s.getAddress());
+                }
+
+
             }
         });
     }
 
     @Override
     public void onPlacesFinished() {
+        Log.d(TAG, "onPlacesFinished");
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://52.79.67.124:8080/")
+                .addConverterFactory(GsonConverterFactory.create()) // 파싱등록
+                .build();
+        RetrofitService service = retrofit.create(RetrofitService.class);
+
+//        Call<Store> st = service.send(1);
+//        Log.d(TAG, "onPlacesFinished2");
+//
+//        st.enqueue(new Callback<Store>() {
+//            @Override
+//            public void onResponse(Call<Store> call, Response<Store> response) {
+//                if (response.body()!=null) {
+//                    Log.d(TAG, "onPlacesFinished_onResponse");
+//                    Log.d("store:", response.body().getName());
+////
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Store> call, Throwable t) {
+//                Log.d(TAG, "Fail msg : " + t.getMessage());
+//            }
+//        });
+
+
+        Log.d(TAG, "onPlacesFinished_retrofit");
+
+        Call<List<Store>> call = service.sendStore(stores);
+        Log.d(TAG, "onPlacesFinished_sendStore");
+
+        call.enqueue(new Callback<List<Store>>() {
+            @Override
+            public void onResponse(Call<List<Store>> call, Response<List<Store>> response) {
+                if (response.isSuccessful()) {
+                    Log.d(TAG, "onPlacesFinished_onResponse");
+                    List<Store> s = response.body();
+                    for (Store a : s) {
+                        Log.d("store:", a.getName());
+                        StoreA ss = new StoreA();
+                        ss.setStore(a);
+                        ss.setDistance(getDistance(location.getLatitude(), location.getLongitude(), a.latitude, a.longitude));
+                        Log.d("storename:", ss.getStore().getName());
+                        Log.d("distance:", ss.getDistance() + "");
+                        list.add(ss);
+                    }
+                    Collections.sort(list);
+
+                    for (StoreA a : list) {
+                        Log.d("storename2:", a.getStore().getName());
+                        Log.d("distance2:", a.getDistance() + "");
+                    }
+
+                    sla.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Store>> call, Throwable t) {
+                Log.d(TAG, "Fail msg : " + t.getMessage());
+            }
+        });
+
 
     }
 
@@ -506,6 +621,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .type(PlaceType.RESTAURANT) // 음식점
                 .build()
                 .execute();
+    }
 
+    //    public void myRetrofit() {
+//        Retrofit retrofit = new Retrofit.Builder()
+//                .baseUrl("http://52.79.67.124:8080/")
+//                .addConverterFactory(GsonConverterFactory.create()) // 파싱등록
+//                .build();
+//        RetrofitService service = retrofit.create(RetrofitService.class);
+//    }
+    public double getDistance(double lat1, double lng1, double lat2, double lng2) {
+        double distance;
+
+        Location locationA = new Location("point A");
+        locationA.setLatitude(lat1);
+        locationA.setLongitude(lng1);
+
+        Location locationB = new Location("point B");
+        locationB.setLatitude(lat2);
+        locationB.setLongitude(lng2);
+
+        distance = locationA.distanceTo(locationB);
+
+        return distance;
     }
 }
