@@ -9,6 +9,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -106,8 +108,11 @@ public class HomeFragment extends Fragment {
         categoryCafeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MapActivity.class);
+                Intent intent = new Intent(getActivity(), DetailStoreFragment.class);
                 startActivity(intent);
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.ContentLayout, fragment).commit();
             }
         });
 //        viewGroup = (ViewGroup) inflater.inflate(R.layout.fragment_home, container, false);

@@ -14,21 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-
+        <activity android:name=".RetrofitActivity"></activity>
         <activity android:name=".SearchActivity" />
-        <activity android:name=".MapActivity">
-
-        </activity>
+        <activity android:name=".MapActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAEDQMFzLbkcU6MObUw8Iq0YSm3jzC4OL4" />
+            android:value="${googleMapApiKey}" />
     </application>
 
 </manifest>
