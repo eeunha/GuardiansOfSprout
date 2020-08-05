@@ -6,3 +6,6 @@
 또한 에어비앤비의 '슈퍼호스트'에 착안하여 '슈퍼호스트' 제도를 시행합니다. <br><br>
 ![세이플레이스1](https://user-images.githubusercontent.com/41456311/87877866-c407e180-ca1b-11ea-972e-63d50bdf7a83.PNG)
 
+![세이플레이스2](https://user-images.githubusercontent.com/41456311/87878040-c28ae900-ca1c-11ea-9a09-0c93db0ea4c8.PNG)
+![세이플레이스3](https://user-images.githubusercontent.com/41456311/87878043-c880ca00-ca1c-11ea-89a4-0f284bae10ad.PNG)
+
